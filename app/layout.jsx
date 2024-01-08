@@ -1,5 +1,8 @@
 import "@styles/globals.css";
 
+import Nav from "@components/nav";
+import Provider from "@components/provider";
+
 export const metadata = {
   title: "CreativeChats",
   description: "Discover & Share AI prompts",
@@ -13,7 +16,10 @@ const RootLayout = ({ children }) => {
           <div className="gradient" />
         </div>
 
-        <main className="app">{children}</main>
+        <main className="app">
+          <Nav />
+          {children}
+        </main>
       </body>
     </html>
   );

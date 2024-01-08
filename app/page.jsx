@@ -10,7 +10,7 @@ const Home = () => {
       </h1>
       <p className="desc text-center">
         CreativeChats is an open source AI prompting tool for modern world to
-        disco@ver, create and share AI-powered prompts.
+        discover, create and share AI-powered prompts.
       </p>
       <Feed />
     </section>
