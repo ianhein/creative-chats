@@ -1,12 +1,6 @@
 import PromptCard from "./PromptCard";
 
-const standardProfile = ({
-  name,
-  description,
-  data,
-  handleEdit,
-  handleDelete,
-}) => {
+const Profile = ({ name, description, data, handleEdit, handleDelete }) => {
   return (
     <section className="w-full">
       <h1 className="head_text text-left">
@@ -27,4 +21,4 @@ const standardProfile = ({
   );
 };
 
-export default standardProfile;
+export default Profile;
