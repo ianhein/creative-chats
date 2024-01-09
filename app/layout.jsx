@@ -5,7 +5,7 @@ import Provider from "@components/Provider";
 
 export const metadata = {
   title: "CreativeChats",
-  description: "Discover & Share AI prompts",
+  description: "Discover & Share AI  prompts",
 };
 
 const RootLayout = ({ children }) => {
