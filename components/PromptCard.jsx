@@ -9,6 +9,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
   const { data: session } = useSession();
   const pathName = usePathname();
   const router = useRouter();
+
   const handleCopy = () => {
     setCopied(post.prompt);
     navigator.clipboard.writeText(post.prompt);
@@ -16,10 +17,22 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
       setCopied("");
     }, 3000);
   };
+
+  const handleProfileClick = () => {
+    if (session?.user.id === post.creator._id) {
+      router.push("/profile");
+    } else {
+      router.push(`/profile/${post.creator._id}?name=${post.creator.username}`);
+    }
+  };
+
   return (
     <div className="prompt_card">
       <div className="flex justify-between items-start gap-5">
-        <div className="flex-1 flex justify-start items-center gap-3 cursor-pointer">
+        <div
+          className="flex-1 flex justify-start items-center gap-3 cursor-pointer"
+          onClick={handleProfileClick}
+        >
           <Image
             src={post.creator.image}
             alt="user_image"
@@ -41,20 +54,21 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
           <Image
             src={
               copied === post.prompt
-                ? "/assests/icons/tick.svg"
+                ? "/assets/icons/tick.svg"
                 : "/assets/icons/copy.svg"
             }
             width={12}
             height={12}
+            alt="copy_icon"
           />
         </div>
       </div>
       <p className="my-4 font_datoshi text-sm text-gray-700">{post.prompt}</p>
       <p
         className="font-inter text-sm blue_gradient cursor-pointer"
-        onClick={() => handleClick && hangleTagClick(post.tag)}
+        onClick={() => handleTagClick?.(post.tag)}
       >
-        {post.tag}
+        #{post.tag}
       </p>
       {session?.user.id === post.creator._id && pathName === "/profile" && (
         <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3">

@@ -1,7 +1,7 @@
 import { connectToDB } from "@utils/database";
 import Prompt from "@models/prompt";
 
-export const GET = async (request, { params }) => {
+export const GET = async (_request, { params }) => {
   try {
     await connectToDB();
     const prompt = await Prompt.findById(params.id).populate("creator");
@@ -19,7 +19,7 @@ export const PATCH = async (request, { params }) => {
   try {
     await connectToDB();
     const existingPrompt = await Prompt.findById(params.id);
-    if (!existingPrompt) { 
+    if (!existingPrompt) {
       return new Response("Prompt not found", { status: 404 });
     }
     existingPrompt.prompt = prompt;
@@ -32,12 +32,22 @@ export const PATCH = async (request, { params }) => {
   }
 };
 
-export const DELETE = async (request, { params }) => {
+export const DELETE = async (_request, { params }) => {
   try {
     await connectToDB();
-    await Prompt.findByIdAndRemove(params.id);
-    return new Response("Prompt deleted", { status: 200 });
+    const result = await Prompt.findByIdAndDelete(params.id);
+
+    if (!result) {
+      console.log(`Prompt with id ${params.id} not found.`);
+      return new Response("Prompt not found", { status: 404 });
+    }
+
+    console.log(`Prompt with id ${params.id} deleted successfully.`);
+    return new Response("Prompt deleted successfully", { status: 200 });
   } catch (error) {
-    return new Response("Failed to delete", { status: 500 });
+    console.error("Error deleting prompt:", error);
+    return new Response(`Couldn't remove the prompt: ${error.message}`, {
+      status: 500,
+    });
   }
 };
